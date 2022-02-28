@@ -21,10 +21,9 @@ def process_data(
         filter_category='restaurant',
         filter_city='portland'):
     '''
-     This function merges the three data set into one and writes the results to the data/clean folder.
+     This function cleans the raw data set and writes the results to the data/clean folder.
      
      restaurant = This is the data frame for restaurants
-     
      review = This is the data frame that contains reviews for restuarants. 
      
      num_users = unique users from reviews

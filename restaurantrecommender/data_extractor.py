@@ -1,6 +1,5 @@
 import pandas as pd
 import tarfile
-import requests
 import os
 
 def extract_data(tar_filename='yelp_dataset.tar',
@@ -19,15 +18,12 @@ def process_data(
         raw_data_directory='../data/raw',
         clean_data_directory='../data/clean',
         filter_category='restaurant',
-        filter_city='portland'):
+        filter_city='philadelphia'):
     '''
-     This function cleans the raw data set and writes the results to the data/clean folder.
+     This function filters the business and reviews data set and  writes the results to the data/clean folder.
      
      restaurant = This is the data frame for restaurants
-     review = This is the data frame that contains reviews for restuarants. 
-     
-     num_users = unique users from reviews
-     num_restaurants = unique restaurants from dataframe. 
+     data = This is the data frame that contains reviews for restuarants. 
      
     '''
     
@@ -46,21 +42,23 @@ def process_data(
     restaurant.drop(axis = 1, columns = ['categories', 'city'], inplace = True)
     restaurant.to_csv(os.path.join(clean_data_directory, 'restaurant.csv'))
     num_restaurant = restaurant.business_id.unique().shape[0]
-    
-    review = pd.read_json(os.path.join(raw_data_directory, 'yelp_academic_dataset_review.json'), lines=True)
-    review = review[['user_id', 'business_id', 'stars']]
-    review = pd.merge(left = restaurant, right = review, how = 'inner', on = 'business_id')
-    review.to_csv(os.path.join(clean_data_directory, 'review.csv'))
+    print(f"Number of Restaurant {num_restaurant}")
 
-    num_users = review.user_id.unique().shape[0]
-    return restaurant, review, num_restaurant, num_users
+    review = pd.read_json(os.path.join(raw_data_directory, 'yelp_academic_dataset_review.json'), lines = True)
+    review = review[['user_id', 'business_id', 'stars']]
+    data = pd.merge(left = restaurant, right = review, how = 'inner', on = 'business_id')
+    data.to_csv(os.path.join(clean_data_directory, 'review.csv'))
+  
+    num_users = data.user_id.unique().shape[0]
+    print(f"Number of Users {num_users}")
+    return restaurant, data
 
 def main():
    '''
        This function executes the steps sequentially and writes the results to data folder.
    '''
    extract_data()
-   restaurant, review, num_restaurant, num_users = process_data()
+   restaurant, review = process_data()
    directory = './output'
    if not os.path.exists(directory):
         os.makedirs(directory)

@@ -100,7 +100,7 @@ class ALSRestaurantRecommender:
         print(recommendation)
 
     def similar_restaurants(self, restaurant_id, no_similar):
-        similar = self.als_model.similar(restaurant_id, no_similar)
+        similar = self.als_model.similar_items(restaurant_id, no_similar)
         print(similar)
 
     def save_pickle_model(self, als_pickle_file="./output/als.pickle"):

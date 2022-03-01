@@ -11,12 +11,12 @@ import random
 class ALSRestaurantRecommender:
     def __init__(self, restaurant_file_path, reviews_file_path, factors=20, regularization=0.1, iterations=50):
         """
-          Creates an instance of ALS restaurant recommender.
+          Creates an instance of ALS Restaurant recommender.
 
           The init function also initializes the model params if not specified.
         """
-        self.restaurant_df = self._load_csv_file(restaurant_file_path)
-        self.reviews_df = self._load_csv_file(reviews_file_path)
+        self.restaurant_df = ALSRestaurantRecommender._load_csv_file(restaurant_file_path)
+        self.reviews_df = ALSRestaurantRecommender._load_csv_file(reviews_file_path)
         self.iterations = iterations
         self.factors = factors
         self.regularization = regularization
@@ -25,7 +25,8 @@ class ALSRestaurantRecommender:
         self.sparse_restaurant_user = None
         self.sparse_user_restaurant = None
 
-    def _load_csv_file(self, filepath):
+    @staticmethod
+    def _load_csv_file(filepath):
         """
           This function loads a file into memory for computation
         """
@@ -85,18 +86,27 @@ class ALSRestaurantRecommender:
 
     def user_rated_restaurants(self, user_id):
         """
-            Returns a list of restaurants that are rated by the user.
+            Given a user_id, returns a list of restaurants that are rated by the user.
+            :param user_id
         """
-        print(self.reviews_df[self.reviews_df['user_id'] == user_id]['name'].unique())
+        restaurant = [self.reviews_df.name.loc[self.reviews_df.users_id_code == user_id].iloc[0]]
+        print("Rated By User", user_id)
+        pd.DataFrame(restaurant)
+        return restaurant
 
-    def fit_model(self, alpha_val=40, test_size=0.2):
+    def fit_model(self, test_size=0.2):
         """
           This function fits an ALS Model for the restaurant dataset which is used to get recommendation for a user.
+          :param test_size the size for train test split
         """
         train_data, test_data = self._train_test_split(test_size)
         self.als_model.fit(train_data)
 
     def make_recommendation(self, user_id):
+        """
+            Given a user id this function recommends a list of restaurants that match user profile.
+            :param user_id the id of the user
+        """
         ids, scores = self.als_model.recommend(user_id, self.sparse_user_restaurant[user_id])
         restaurant = []
         for id in ids:
@@ -105,17 +115,24 @@ class ALSRestaurantRecommender:
         print(pd.DataFrame(restaurant))
 
     def similar_restaurants(self, business_id, no_similar):
+        """
+            Given a business Id and No of results to return, this function returns a list of similar restaurants.
+            :param business_id the id of the restaurant
+            :param no_similar no of similar results to return
+            :return restaurant list.
+        """
         ids, scores = self.als_model.similar_items(business_id, no_similar)
         restaurant = []
         for id in ids:
             restaurant.append(self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
         print("Restaurants Similar to", self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
         print(pd.DataFrame(restaurant))
+        return restaurant
 
     def save_pickle_model(self, als_pickle_file="./output/als.pickle"):
         """
-          Saves current model to filepath specified by user.
-          :param als_pickle_file filepath specified by yser.
+          Saves current model to filepath specified by the user.
+          :param als_pickle_file filepath specified by the yser.
           :return none
         """
         with open(als_pickle_file, "wb") as f:

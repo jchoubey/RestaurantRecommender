@@ -47,6 +47,8 @@ class ALSRestaurantRecommender:
         rows = self.reviews_df.user_id.astype(CategoricalDtype(categories=unique_users)).cat.codes
         cols = self.reviews_df.business_id.astype(CategoricalDtype(categories=unique_restaurant)).cat.codes
 
+        self.reviews_df['users_id_code'] = rows
+        self.reviews_df['business_id_code'] = cols
         sparse_restaurant_user = csr_matrix((rating, (cols, rows)), shape=(len(unique_restaurant), len(unique_users)))
         sparse_user_restaurant = csr_matrix((rating, (rows, cols)), shape=(len(unique_users), len(unique_restaurant)))
         self.sparse_restaurant_user = sparse_restaurant_user
@@ -92,16 +94,23 @@ class ALSRestaurantRecommender:
           This function fits an ALS Model for the restaurant dataset which is used to get recommendation for a user.
         """
         train_data, test_data = self._train_test_split(test_size)
-        data_conf = (train_data.T * alpha_val).astype('double')
-        self.als_model.fit(data_conf)
+        self.als_model.fit(train_data)
 
     def make_recommendation(self, user_id):
-        recommendation = self.als_model.recommend(user_id, self.sparse_user_restaurant[user_id])
-        print(recommendation)
+        ids, scores = self.als_model.recommend(user_id, self.sparse_user_restaurant[user_id])
+        restaurant = []
+        for id in ids:
+            restaurant.append(self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
+        print("Recommendation For User", user_id)
+        print(pd.DataFrame(restaurant))
 
-    def similar_restaurants(self, restaurant_id, no_similar):
-        similar = self.als_model.similar_items(restaurant_id, no_similar)
-        print(similar)
+    def similar_restaurants(self, business_id, no_similar):
+        ids, scores = self.als_model.similar_items(business_id, no_similar)
+        restaurant = []
+        for id in ids:
+            restaurant.append(self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
+        print("Restaurants Similar to", self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
+        print(pd.DataFrame(restaurant))
 
     def save_pickle_model(self, als_pickle_file="./output/als.pickle"):
         """

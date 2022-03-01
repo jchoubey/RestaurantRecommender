@@ -6,31 +6,24 @@ import pickle
 import os
 import implicit
 import random
+from recommender import RestaurantRecommender
 
 
-class ALSRestaurantRecommender:
-    def __init__(self, restaurant_file_path, reviews_file_path, factors=20, regularization=0.1, iterations=50):
+class AlsRecommender(RestaurantRecommender):
+    def __init__(self, restaurant_filepath, reviews_filepath, factors=20, regularization=0.1, iterations=50):
         """
           Creates an instance of ALS Restaurant recommender.
 
           The init function also initializes the model params if not specified.
         """
-        self.restaurant_df = ALSRestaurantRecommender._load_csv_file(restaurant_file_path)
-        self.reviews_df = ALSRestaurantRecommender._load_csv_file(reviews_file_path)
+        super().__init__(restaurant_filepath, reviews_filepath)
         self.iterations = iterations
         self.factors = factors
         self.regularization = regularization
-        self.als_model = implicit.als.AlternatingLeastSquares(factors=self.factors, regularization=self.regularization,
-                                                              iterations=self.iterations);
+        self.model = implicit.als.AlternatingLeastSquares(factors=self.factors, regularization=self.regularization,
+                                                          iterations=self.iterations);
         self.sparse_restaurant_user = None
         self.sparse_user_restaurant = None
-
-    @staticmethod
-    def _load_csv_file(filepath):
-        """
-          This function loads a file into memory for computation
-        """
-        return pd.read_csv(filepath)
 
     def _create_sparse_matrix(self):
         """
@@ -84,30 +77,20 @@ class ALSRestaurantRecommender:
         training_set.eliminate_zeros()
         return training_set, test_set
 
-    def user_rated_restaurants(self, user_id):
-        """
-            Given a user_id, returns a list of restaurants that are rated by the user.
-            :param user_id
-        """
-        restaurant = [self.reviews_df.name.loc[self.reviews_df.users_id_code == user_id].iloc[0]]
-        print("Rated By User", user_id)
-        pd.DataFrame(restaurant)
-        return restaurant
-
-    def fit_model(self, test_size=0.2):
+    def train_model(self, test_size=0.2):
         """
           This function fits an ALS Model for the restaurant dataset which is used to get recommendation for a user.
           :param test_size the size for train test split
         """
         train_data, test_data = self._train_test_split(test_size)
-        self.als_model.fit(train_data)
+        self.model.fit(train_data)
 
     def make_recommendation(self, user_id):
         """
             Given a user id this function recommends a list of restaurants that match user profile.
             :param user_id the id of the user
         """
-        ids, scores = self.als_model.recommend(user_id, self.sparse_user_restaurant[user_id])
+        ids, scores = self.model.recommend(user_id, self.sparse_user_restaurant[user_id])
         restaurant = []
         for id in ids:
             restaurant.append(self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
@@ -121,32 +104,10 @@ class ALSRestaurantRecommender:
             :param no_similar no of similar results to return
             :return restaurant list.
         """
-        ids, scores = self.als_model.similar_items(business_id, no_similar)
+        ids, scores = self.model.similar_items(business_id, no_similar)
         restaurant = []
         for id in ids:
             restaurant.append(self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
         print("Restaurants Similar to", self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
         print(pd.DataFrame(restaurant))
         return restaurant
-
-    def save_pickle_model(self, als_pickle_file="./output/als.pickle"):
-        """
-          Saves current model to filepath specified by the user.
-          :param als_pickle_file filepath specified by the yser.
-          :return none
-        """
-        with open(als_pickle_file, "wb") as f:
-            print(f"Saving ALS Model to {als_pickle_file}")
-            pickle.dump(self.model, f)
-
-
-def main():
-    recommender = ALSRestaurantRecommender("../data/clean/restaurant.csv", "../data/clean/review.csv")
-    recommender.fit_model()
-    recommender.make_recommendation(12)
-    recommender.similar_restaurants(1, 4)
-
-
-if __name__ == "__main__":
-    main()
-

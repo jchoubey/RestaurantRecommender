@@ -87,19 +87,6 @@ class ALSRestaurantRecommender:
         """
         print(self.reviews_df[self.reviews_df['user_id'] == user_id]['name'].unique())
 
-    def similar_restaurants(self, restaurant_name, no_similar=10):
-        """
-            Returns a list of restaurants which are similar to the one.
-        """
-        business_id = self.restaurant_df.business_id.loc[self.restaurant_df.name == restaurant_name]
-        similar = self.model.similar_items(business_id, no_similar)
-        # Print the names of similar restaurants
-        for item in similar:
-            idx, rating = item
-            movie_names.append(movies.name.loc[movies.item_id == idx + 1].iloc[0])
-        similar = pd.DataFrame({"Similar Movies": movie_names[1:]})
-        return similar
-
     def fit_model(self, alpha_val=40, test_size=0.2):
         """
           This function fits an ALS Model for the restaurant dataset which is used to get recommendation for a user.

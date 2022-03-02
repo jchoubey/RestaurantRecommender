@@ -10,20 +10,24 @@ from recommender import RestaurantRecommender
 
 
 class AlsRecommender(RestaurantRecommender):
-    def __init__(self, restaurant_filepath, reviews_filepath, factors=20, regularization=0.1, iterations=50):
+    def __init__(self, user_review_business):
         """
           Creates an instance of ALS Restaurant recommender.
 
           The init function also initializes the model params if not specified.
         """
-        super().__init__(restaurant_filepath, reviews_filepath)
-        self.iterations = iterations
-        self.factors = factors
-        self.regularization = regularization
-        self.model = implicit.als.AlternatingLeastSquares(factors=self.factors, regularization=self.regularization,
-                                                          iterations=self.iterations);
+        super().__init__(user_review_business)
+        self.model = None
         self.sparse_restaurant_user = None
         self.sparse_user_restaurant = None
+        self.set_model_params();
+
+    def set_model_params(self, factors=20, regularization=0.1, iterations=50):
+        """
+            Function to override default model params.
+        """
+        self.model = implicit.als.AlternatingLeastSquares(factors=factors, regularization=regularization,
+                                                          iterations=iterations);
 
     def _create_sparse_matrix(self):
         """
@@ -93,7 +97,7 @@ class AlsRecommender(RestaurantRecommender):
         ids, scores = self.model.recommend(user_id, self.sparse_user_restaurant[user_id])
         restaurant = []
         for id in ids:
-            restaurant.append(self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
+            restaurant.append(self.reviews_df.business_name.loc[self.reviews_df.business_id_code == id].iloc[0])
         print("Recommendation For User", user_id)
         print(pd.DataFrame(restaurant))
 
@@ -107,7 +111,7 @@ class AlsRecommender(RestaurantRecommender):
         ids, scores = self.model.similar_items(business_id, no_similar)
         restaurant = []
         for id in ids:
-            restaurant.append(self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
-        print("Restaurants Similar to", self.reviews_df.name.loc[self.reviews_df.business_id_code == id].iloc[0])
+            restaurant.append(self.reviews_df.business_name.loc[self.reviews_df.business_id_code == id].iloc[0])
+        print("Restaurants Similar to", self.reviews_df.business_name.loc[self.reviews_df.business_id_code == id].iloc[0])
         print(pd.DataFrame(restaurant))
         return restaurant

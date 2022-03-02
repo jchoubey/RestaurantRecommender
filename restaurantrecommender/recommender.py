@@ -11,9 +11,8 @@ from exception_errors import InvalidRestaurantRecommenderType
 
 
 class RestaurantRecommender:
-    def __init__(self, restaurant_file_path, reviews_file_path):
-        self.restaurant_df = RestaurantRecommender._load_csv_file(restaurant_file_path)
-        self.reviews_df = RestaurantRecommender._load_csv_file(reviews_file_path)
+    def __init__(self, user_review_business):
+        self.reviews_df = RestaurantRecommender._load_csv_file(user_review_business)
 
     @staticmethod
     def _load_csv_file(filepath):
@@ -27,7 +26,7 @@ class RestaurantRecommender:
             Given a user_id, returns a list of restaurants that are rated by the user.
             :param user_id
         """
-        restaurant = [self.reviews_df.name.loc[self.reviews_df.users_id_code == user_id].iloc[0]]
+        restaurant = [self.reviews_df.business_name.loc[self.reviews_df.users_id_code == user_id].iloc[0]]
         print("Rated By User", user_id)
         pd.DataFrame(restaurant)
         return restaurant

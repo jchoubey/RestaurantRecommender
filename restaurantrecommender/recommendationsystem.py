@@ -12,9 +12,9 @@ from exception_errors import InvalidRestaurantRecommenderType
 
 
 class RecommendationSystem:
-    def __init__(self, restaurant_filepath, reviews_filepath, recommender_type):
+    def __init__(self, user_review_business, recommender_type):
         if RecommenderType(recommender_type) is RecommenderType.AlsRecommender:
-            self.recommender = AlsRecommender(restaurant_filepath, reviews_filepath, )
+            self.recommender = AlsRecommender(user_review_business)
         else:
             raise InvalidRestaurantRecommenderType("recommender type not supported")
         self._train_model()
@@ -50,10 +50,9 @@ class RecommendationSystem:
         self.recommender.save_pickle_model()
 
 def main():
-    recommendationsystem = RecommendationSystem("../data/clean/restaurant.csv", "../data/clean/review.csv",
-                                                "ALSRecommender")
-    recommendationsystem.make_recommendation(12)
-    recommendationsystem.similar_restaurants(1, 4)
+    recommendationsystem = RecommendationSystem("../data/clean/user_business_review.csv", "ALSRecommender")
+    recommendationsystem.make_recommendation(100)
+    recommendationsystem.similar_restaurants(1, 10)
     recommendationsystem.save_pickle_model()
 
 

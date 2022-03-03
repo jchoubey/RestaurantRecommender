@@ -1,0 +1,5 @@
+implicit==0.5.2
+numpy==1.21.2
+pandas==1.2.4
+scipy==1.6.3
+setuptools==51.0.0.post20201207

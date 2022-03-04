@@ -6,9 +6,11 @@ import pickle
 import os
 import implicit
 import random
-from alsrecommender import AlsRecommender
-from constants import RecommenderType
-from exception_errors import InvalidRestaurantRecommenderType
+
+# local modules
+from restaurantrecommender.alsrecommender import AlsRecommender
+from restaurantrecommender.constants import RecommenderType
+from restaurantrecommender.exception_errors import InvalidRestaurantRecommenderType
 
 
 class RecommendationSystem:
@@ -42,12 +44,13 @@ class RecommendationSystem:
         """
         self.recommender.similar_restaurants(business_id, no_similar)
 
-    def save_pickle_model(self):
+    def save_pickle_model(self, file_path):
         """
           Saves current model to filepath specified by the user.
           :return none
         """
-        self.recommender.save_pickle_model()
+        self.recommender.save_pickle_model(file_path)
+
 
 def main():
     recommendationsystem = RecommendationSystem("../data/clean/user_business_review.csv", "ALSRecommender")

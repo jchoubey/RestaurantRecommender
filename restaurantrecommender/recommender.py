@@ -6,8 +6,8 @@ import pickle
 import os
 import implicit
 import random
-from constants import RecommenderType
-from exception_errors import InvalidRestaurantRecommenderType
+from restaurantrecommender.constants import RecommenderType
+from restaurantrecommender.exception_errors import InvalidRestaurantRecommenderType
 
 
 class RestaurantRecommender:
@@ -37,6 +37,10 @@ class RestaurantRecommender:
           :param model_pickle_file filepath specified by the yser.
           :return none
         """
+        output_directory = './output'
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
+
         with open(model_pickle_file, "wb") as f:
             print(f"Saving Recommendation Model to {model_pickle_file}")
             pickle.dump(self.model, f)

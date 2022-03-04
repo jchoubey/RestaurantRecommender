@@ -11,7 +11,7 @@ def extract_data(tar_filename='yelp_dataset.tar', data_directory='../data/raw'):
         os.makedirs(data_directory)
         
     print('extracting contents')
-    file = tarfile.open(os.path.join(data_directory,tar_filename))
+    file = tarfile.open(os.path.join(data_directory, tar_filename))
     file.extractall(path=data_directory)
 
 

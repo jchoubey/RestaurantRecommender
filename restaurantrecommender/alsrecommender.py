@@ -6,7 +6,7 @@ import pickle
 import os
 import implicit
 import random
-from recommender import RestaurantRecommender
+from restaurantrecommender.recommender import RestaurantRecommender
 
 
 class AlsRecommender(RestaurantRecommender):

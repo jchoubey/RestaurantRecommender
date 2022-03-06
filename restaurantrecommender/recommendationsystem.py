@@ -33,7 +33,8 @@ class RecommendationSystem:
             Given a user id this function recommends a list of restaurants that match user profile.
             :param user_id the id of the user
         """
-        self.recommender.make_recommendation(user_id)
+        restaurant = self.recommender.make_recommendation(user_id)
+        return restaurant
 
     def similar_restaurants(self, business_id, no_similar):
         """
@@ -42,7 +43,8 @@ class RecommendationSystem:
             :param no_similar no of similar results to return
             :return restaurant list.
         """
-        self.recommender.similar_restaurants(business_id, no_similar)
+        restaurant = self.recommender.similar_restaurants(business_id, no_similar)
+        return restaurant
 
     def save_pickle_model(self, file_path):
         """
@@ -50,6 +52,12 @@ class RecommendationSystem:
           :return none
         """
         self.recommender.save_pickle_model(file_path)
+
+    def user_rated_restaurants(self, user_id):
+        """
+            Returns user rated restaurants.
+        """
+        self.recommender.user_rated_restaurants(user_id)
 
 
 def main():

@@ -29,7 +29,7 @@ class AlsRecommender(RestaurantRecommender):
         self.model = implicit.als.AlternatingLeastSquares(factors=factors, regularization=regularization,
                                                           iterations=iterations);
 
-    def _create_sparse_matrix(self):
+    def create_sparse_matrix(self):
         """
            This function takes a dataframe and creates a sparse user-restaurant matrix and
            sparse restaurant-user matrix using csr matrix
@@ -65,7 +65,7 @@ class AlsRecommender(RestaurantRecommender):
             This function takes a user-restaurant matrix and splits it into train/test data.
             We mask a percentage of ratings from training set.
         """
-        self._create_sparse_matrix()
+        self.create_sparse_matrix()
         ratings = self.sparse_user_restaurant
         test_set = ratings.copy()
         test_set[test_set != 0] = 1
@@ -98,8 +98,7 @@ class AlsRecommender(RestaurantRecommender):
         restaurant = []
         for id in ids:
             restaurant.append(self.reviews_df.business_name.loc[self.reviews_df.business_id_code == id].iloc[0])
-        print("Recommendation For User", user_id)
-        print(pd.DataFrame(restaurant))
+        return restaurant
 
     def similar_restaurants(self, business_id, no_similar):
         """
@@ -112,6 +111,4 @@ class AlsRecommender(RestaurantRecommender):
         restaurant = []
         for id in ids:
             restaurant.append(self.reviews_df.business_name.loc[self.reviews_df.business_id_code == id].iloc[0])
-        print("Restaurants Similar to", self.reviews_df.business_name.loc[self.reviews_df.business_id_code == id].iloc[0])
-        print(pd.DataFrame(restaurant))
         return restaurant

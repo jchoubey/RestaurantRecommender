@@ -1,3 +1,5 @@
+[![Build Status](https://app.travis-ci.com/Poornima-Muthukumar/RestaurantRecommender.svg?branch=main)](https://app.travis-ci.com/Poornima-Muthukumar/RestaurantRecommender)
+
 ## Data 515: Software Design for Data Science
 
 ## Restaurant Recommendation System

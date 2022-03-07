@@ -12,12 +12,40 @@ As a developer implementing a recommendation system can be a daunting task. With
 
 The goal of the project is to use the yelp dataset to build a restaurant recommendation system that recommends restaurants to users based on two different approaches 
 
-The collaborative filtering recommendation model works by searching a large group of users and finding a smaller set of users with tastes similar to the particular user. It looks at the restaurant they like and creates a ranked list of suggested restaurants. 
-The content based filtering recommendation model works by recommending restaurants to users based on similar restaurant categories and dominant topic keyworks, thus suggesting restaurants that alight with a user’s preferences. 
+1. The collaborative filtering recommendation model works by searching a large group of users and finding a smaller set of users with tastes similar to the particular user. It looks at the restaurant they like and creates a ranked list of suggested restaurants. 
+2. The content based filtering recommendation model works by recommending restaurants to users based on similar restaurant categories and dominant topic keyworks, thus suggesting restaurants that alight with a user’s preferences. 
 
 ## Dataset Decription
+In case you decide to use your own dataset other than the one listed anove, please make sure your dataset meets the following requirements. 
+
+**Business Dat**a
+| Column | Datatype | Required |
+| ------ | -------- | -------- |
+| business_id | string | Yes |
+| name | string | Yes |
+| categories | string | Yes |
+| attributes | string | Yes |
+| city | string | Yes |
+| stars | int | Yes |
+
+**User Data**
+| Column | Datatype | Required |
+| ------ | -------- | -------- |
+| user_id | string | Yes |
+| name | string | Yes |
+| average_stars | string | Yes |
+
+**Reviews Data**
+| Column | Datatype | Required |
+| ------ | -------- | -------- |
+| user_id | string | Yes |
+| business_id | string | Yes |
+| stars | string | Yes |
+
+if any of the obove columns are not available then the data_extractor.py will fail.
 
 ## Data Processing
+To clean and process the Raw Yelp Data Set we use the data_extractor.py file. The filepath to the raw data folder and filenames are passed to the data_extractor.py file which does basic preprocessing and outputs the csv file which is written to the clean folder path which is also passed as a parameter to the data_extractor.py file. 
 
 ## Project Folder Structure
 

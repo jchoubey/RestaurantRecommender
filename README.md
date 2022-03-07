@@ -41,7 +41,7 @@ In case you decide to use your own dataset other than the one listed anove, plea
 | ------ | -------- | -------- | ------------|
 | user_id | string | Yes | 22 character unique user id, maps to the user in user.json |
 | business_id | string | Yes | 22 character business id, maps to business in business.json |
-| stars | string | Yes | integer, star rating |
+| stars | string | Integer | integer, star rating |
 
 if any of the obove columns are not available then the data_extractor.py will fail.
 
@@ -49,6 +49,8 @@ if any of the obove columns are not available then the data_extractor.py will fa
 To clean and process the Raw Yelp Data Set we use the data_extractor.py file. The filepath to the raw data folder and filenames are passed to the data_extractor.py file which does basic preprocessing and outputs the csv file which is written to the clean folder path which is also passed as a parameter to the data_extractor.py file. 
 
 ## Project Folder Structure
+
+<img width="427" alt="Project Strucutre" src="https://github.com/Poornima-Muthukumar/RestaurantRecommender/blob/main/docs/folder-structure.png">
 
 ## Installaton and user guide on how to use RestaurantRecommender
 To install and use RestaurantRecommender, you can follow the below steps or refer to the example section below.

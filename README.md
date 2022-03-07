@@ -4,8 +4,16 @@
 Authors: Poornima Muthukumar, Juhi Choubey
 
 ## Introduction
+Recommendation Systems return the most relevant and accurate results (products, restaurants, books, travel plans, movies, tv-shows) to the user by filtering useful results from a huge pool of information. Recommendation systems discover data patterns in the data set by learning about customers’ choices and produce the outcome that correlates to their interest or preference. 
 
-## Objective
+As a developer implementing a recommendation system can be a daunting task. With this project, we simplify integrating a recommendation system for recommending restaurants to users. Businesses can benefit from a good recommendation system as it increases user engagement and creates stickiness on the platform. In this project we build a python package that provides developers with the ability to easily integrate two kinds of recommendation systems - one is the collaborative filtering model and the other is a content based filtering model. 
+
+## Goal
+
+The goal of the project is to use the yelp dataset to build a restaurant recommendation system that recommends restaurants to users based on two different approaches 
+
+The collaborative filtering recommendation model works by searching a large group of users and finding a smaller set of users with tastes similar to the particular user. It looks at the restaurant they like and creates a ranked list of suggested restaurants. 
+The content based filtering recommendation model works by recommending restaurants to users based on similar restaurant categories and dominant topic keyworks, thus suggesting restaurants that alight with a user’s preferences. 
 
 ## Dataset Decription
 
@@ -44,4 +52,7 @@ To install and use RestaurantRecommender, you can follow the below steps or refe
    ```
 
 ## Limitations
+
+Currently, we only support two kids of recommendation - Collaborative and Content Based Recommendation. The collaborative based approach is based on ALS Algorithm. Later we can expand our approach to support other recommendation types as well. 
+The package does not ahve an UI interface in its current state, but providing one in the future would make the interaction easy for non-technical users.
 

@@ -41,7 +41,7 @@ In case you decide to use your own dataset other than the one listed anove, plea
 | ------ | -------- | -------- | ------------|
 | user_id | string | Yes | 22 character unique user id, maps to the user in user.json |
 | business_id | string | Yes | 22 character business id, maps to business in business.json |
-| stars | string | Yes | integer, star rating |
+| stars | string | Integer | integer, star rating |
 
 if any of the obove columns are not available then the data_extractor.py will fail.
 

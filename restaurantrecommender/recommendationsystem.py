@@ -9,6 +9,7 @@ import random
 
 # local modules
 from restaurantrecommender.alsrecommender import AlsRecommender
+from restaurantrecommender.content_based_recommender import ContentBasedRecommender
 from restaurantrecommender.constants import RecommenderType
 from restaurantrecommender.exception_errors import InvalidRestaurantRecommenderType
 
@@ -17,6 +18,8 @@ class RecommendationSystem:
     def __init__(self, user_review_business, recommender_type):
         if RecommenderType(recommender_type) is RecommenderType.AlsRecommender:
             self.recommender = AlsRecommender(user_review_business)
+        elif RecommenderType(recommender_type) is RecommenderType.ContentBasedRecommender:
+            self.recommender = ContentBasedRecommender(user_review_business)
         else:
             raise InvalidRestaurantRecommenderType("recommender type not supported")
         self._train_model()

@@ -9,7 +9,7 @@ import random
 from restaurantrecommender.recommender import RestaurantRecommender
 
 
-class AlsRecommender(RestaurantRecommender):
+class CollaborativeBasedRecommender(RestaurantRecommender):
     def __init__(self, user_review_business):
         """
           Creates an instance of ALS Restaurant recommender.

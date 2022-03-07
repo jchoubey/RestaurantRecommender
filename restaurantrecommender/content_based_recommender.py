@@ -2,11 +2,11 @@ import pandas as pd
 import numpy as np
 from numpy.linalg import norm
 from sklearn.pipeline import FeatureUnion
-from transformers import *
+from restaurantrecommender.transformers import *
 from scipy.sparse import coo_matrix
 import simplejson as json
 from datetime import datetime
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from restaurantrecommender.recommender import RestaurantRecommender
 
 

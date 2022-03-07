@@ -12,7 +12,7 @@ class TestRecommendationSystem(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         print("ran set up")
-        cls.rr = RecommendationSystem("../../data/clean/user_business_review.csv", "ALSRecommender")
+        cls.rr = RecommendationSystem("../../data/clean/user_business_review.csv", "CollaborativeBasedRecommender")
 
     @classmethod
     def tearDownClass(cls):

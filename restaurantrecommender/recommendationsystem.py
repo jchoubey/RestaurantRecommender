@@ -8,16 +8,16 @@ import implicit
 import random
 
 # local modules
-from restaurantrecommender.alsrecommender import AlsRecommender
 from restaurantrecommender.content_based_recommender import ContentBasedRecommender
+from restaurantrecommender.collaborative_based_recommender import CollaborativeBasedRecommender
 from restaurantrecommender.constants import RecommenderType
 from restaurantrecommender.exception_errors import InvalidRestaurantRecommenderType
 
 
 class RecommendationSystem:
     def __init__(self, user_review_business, recommender_type):
-        if RecommenderType(recommender_type) is RecommenderType.AlsRecommender:
-            self.recommender = AlsRecommender(user_review_business)
+        if RecommenderType(recommender_type) is RecommenderType.CollaborativeBasedRecommender:
+            self.recommender = CollaborativeBasedRecommender(user_review_business)
         elif RecommenderType(recommender_type) is RecommenderType.ContentBasedRecommender:
             self.recommender = ContentBasedRecommender(user_review_business)
         else:
@@ -64,10 +64,11 @@ class RecommendationSystem:
 
 
 def main():
-    recommendationsystem = RecommendationSystem("../data/clean/user_business_review.csv", "ALSRecommender")
+    recommendationsystem = RecommendationSystem("../data/clean/user_business_review.csv",
+                                                "CollaborativeBasedRecommender")
     recommendationsystem.make_recommendation(100)
     recommendationsystem.similar_restaurants(1, 10)
-    recommendationsystem.save_pickle_model()
+    recommendationsystem.save_pickle_model("./output/model.pickle")
 
 
 if __name__ == "__main__":

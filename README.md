@@ -19,28 +19,29 @@ The goal of the project is to use the yelp dataset to build a restaurant recomme
 In case you decide to use your own dataset other than the one listed anove, please make sure your dataset meets the following requirements. 
 
 **Business Dat**a
-| Column | Datatype | Required |
+| Column | Datatype | Required | Description |
 | ------ | -------- | -------- |
-| business_id | string | Yes |
-| name | string | Yes |
-| categories | string | Yes |
-| attributes | string | Yes |
-| city | string | Yes |
-| stars | int | Yes |
+| business_id | string | Yes | 22 character unique string business id |
+| name | string | Yes | the business's name |
+| categories | string array | Yes | an array of strings of business categories |
+| attributes | object | Yes | business attributes to values |
+| city | string | Yes | name of the city |
+| stars | float | Yes | star rating for business |
 
 **User Data**
-| Column | Datatype | Required |
-| ------ | -------- | -------- |
-| user_id | string | Yes |
-| name | string | Yes |
-| average_stars | string | Yes |
+| Column | Datatype | Required | Description |
+| ------ | -------- | -------- | 
+| user_id | string | Yes | 22 character unique user id, maps to the user in user.json | 
+| name | string | Yes | the user's first name | 
+| average_stars | float | Yes  | average rating of all reviews |
+
 
 **Reviews Data**
-| Column | Datatype | Required |
-| ------ | -------- | -------- |
-| user_id | string | Yes |
-| business_id | string | Yes |
-| stars | string | Yes |
+| Column | Datatype | Required | Description |
+| ------ | -------- | -------- | 
+| user_id | string | Yes | 22 character unique user id, maps to the user in user.json |
+| business_id | string | Yes | 22 character business id, maps to business in business.json |
+| stars | string | Yes | integer, star rating |
 
 if any of the obove columns are not available then the data_extractor.py will fail.
 

@@ -50,6 +50,8 @@ To clean and process the Raw Yelp Data Set we use the data_extractor.py file. Th
 
 ## Project Folder Structure
 
+<img width="427" alt="Project Strucutre" src="https://github.com/Poornima-Muthukumar/RestaurantRecommender/blob/main/docs/folder-structure.png">
+
 ## Installaton and user guide on how to use RestaurantRecommender
 To install and use RestaurantRecommender, you can follow the below steps or refer to the example section below.
 

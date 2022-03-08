@@ -7,7 +7,7 @@ setuptools.setup(
     name="restaurantrecommender",
     version="0.0.1",
     author="Poornima Muthukumar",
-    author_email="muthupoo2@uw.edu",
+    author_email="muthupoo@uw.edu",
     description="Package for Recommending Restaurant",
     long_description=long_description,
     long_description_content_type="text/markdown",

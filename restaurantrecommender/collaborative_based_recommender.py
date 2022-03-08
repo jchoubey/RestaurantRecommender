@@ -112,3 +112,28 @@ class CollaborativeBasedRecommender(RestaurantRecommender):
         for id in ids:
             restaurant.append(self.reviews_df.business_name.loc[self.reviews_df.business_id_code == id].iloc[0])
         return restaurant
+
+    def evaluate_model(self, training_set, altered_users, predictions, test_set):
+        """
+            Function to evaluate the model.
+        """
+        def auc_score(predictions, test):
+            fpr, tpr, thresholds = metrics.roc_curve(test, predictions)
+            return metrics.auc(fpr, tpr)
+
+        store_auc = []
+        popularity_auc = []
+        pop_items = np.array(test_set.sum(axis=0)).reshape(-1)
+        item_vecs = predictions[1]
+        for user in altered_users:
+            training_row = training_set[user, :].toarray().reshape(-1)
+            zero_inds = np.where(training_row == 0)
+            user_vec = predictions[0][user, :]
+            pred = user_vec.dot(item_vecs).toarray()[0, zero_inds].reshape(-1)
+            actual = test_set[user, :].toarray()[0, zero_inds].reshape(-1)
+            pop = pop_items[zero_inds]
+            store_auc.append(auc_score(pred, actual))
+            popularity_auc.append(auc_score(pop, actual))
+        mean_s_auc = float('%.3f' % np.mean(store_auc))
+        mean_p_auc = float('%.3f' % np.mean(popularity_auc))
+        return mean_s_auc, mean_p_auc

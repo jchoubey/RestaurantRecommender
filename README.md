@@ -3,7 +3,7 @@
 
 ## Data 515: Software Design for Data Science
 
-<img width="427" alt="Project Strucutre" src="https://github.com/Poornima-Muthukumar/RestaurantRecommender/blob/main/docs/RestaurantRecommenderLogo.jpeg">
+<img align="center "width="427" alt="Project Strucutre" src="https://github.com/Poornima-Muthukumar/RestaurantRecommender/blob/main/docs/RestaurantRecommenderLogo.jpeg">
 
 ## Restaurant Recommendation System
 Authors: Poornima Muthukumar, Juhi Choubey

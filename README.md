@@ -1,3 +1,6 @@
+[![Build Status](https://app.travis-ci.com/Poornima-Muthukumar/RestaurantRecommender.svg?branch=main)](https://app.travis-ci.com/Poornima-Muthukumar/RestaurantRecommender)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Data 515: Software Design for Data Science
 
 ## Restaurant Recommendation System

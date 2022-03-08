@@ -10,7 +10,7 @@ class TestDataExtractor(unittest.TestCase):
         """
             Checks that the downloaded archive file is extracted correctly.
         """
-        # extract_data(tar_filename='yelp_dataset.tar', data_directory='../../data/raw')
+        extract_data(tar_filename='yelp_dataset.tar', data_directory='../../data/raw')
         self.assertTrue(os.path.exists('../../data/raw/yelp_academic_dataset_business.json'))
         self.assertTrue(os.path.exists('../../data/raw/yelp_academic_dataset_user.json'))
         self.assertTrue(os.path.exists('../../data/raw/yelp_academic_dataset_review.json'))
@@ -19,7 +19,7 @@ class TestDataExtractor(unittest.TestCase):
         """
             Checks if the function produces the merged clean file given input folder and filer
         """
-        # process_data('../../data/raw', '../../data/clean', 'restaurant', 'philadelphia')
+        process_data('../../data/raw', '../../data/clean', 'restaurant', 'philadelphia')
         self.assertTrue(os.path.exists("../../data/clean/user_business_review.csv"))
 
     def test_csv_structure(self):
